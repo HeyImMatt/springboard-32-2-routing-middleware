@@ -35,4 +35,14 @@ router.get('/:name', (req, res, next) => {
   res.json(foundItem)
 })
 
+router.patch('/:name', (req, res, next) => {
+  const foundItem = items.find(item => item.name === req.params.name)
+  if (foundItem === undefined) {
+    throw new ExpressError('Item not found', 404)
+  }
+  foundItem.name = req.body.name
+  foundItem.price = req.body.price
+  res.json({updated: foundItem})
+})
+
 module.exports = router;
