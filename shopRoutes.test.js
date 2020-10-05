@@ -82,3 +82,19 @@ describe('PATCH /items/:name', () => {
     expect(resp.body).toEqual({ error: 'Item not found' });
   });
 });
+
+describe('DELETE /items/:name', () => {
+  test('Deletes an item', async () => {
+    const resp = await request(app).delete('/items/popsicle');
+
+    expect(resp.statusCode).toBe(200);
+    expect(resp.body).toEqual({ message: 'deleted' });
+  });
+
+  test('Returns 404 if item not found', async () => {
+    const resp = await request(app).delete('/items/nothing');
+
+    expect(resp.statusCode).toBe(404);
+    expect(resp.body).toEqual({ error: 'Item not found' });
+  });
+});
