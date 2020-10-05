@@ -48,3 +48,19 @@ describe('POST /items', () => {
     expect(resp.body).toEqual({error: 'Item name and price required'})
   })
 })
+
+describe('GET /items/:name', () => {
+  test('Get single item info', async() => {
+    const resp = await request(app).get('/items/popsicle');
+
+    expect(resp.statusCode).toBe(200);
+    expect(resp.body).toEqual({name: 'popsicle', price: 1.45});
+  })
+
+  test('Returns 404 if item not found', async() => {
+    const resp = await request(app).get('/items/onion');
+
+    expect(resp.statusCode).toBe(404);
+    expect(resp.body).toEqual({error: 'Item not found'});
+  })
+});
