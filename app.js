@@ -15,10 +15,13 @@ app.use(function(req, res, next) {
 /** general error handler */
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
+  // the default status is 500 Internal Server Error
+  let status = err.status || 500;
+  let message = err.message;
 
-  return res.json({
-    error: err.message,
+  // set the status and alert the user
+  return res.status(status).json({
+    error: message
   });
 });
 
